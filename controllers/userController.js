@@ -5,18 +5,16 @@ exports.getAllUsers = async (req, res) => {
         const page = parseInt(req.query.page);
         const size = parseInt(req.query.size);
 
-        const skip = (page - 1) * size;
-        const limit = page * size;
+        const skip = (page -1) * size;
 
         const total = await User.countDocuments();
-
-        const users = await User.find().skip(skip).limit(limit);
+        const users = await User.find().skip(skip).limit(size);
 
         res.json({
             records: users,
-            page,
-            limit,
-            total
+            total,
+            page, 
+            size
         });
     } catch(error) {
         console.log(error)
